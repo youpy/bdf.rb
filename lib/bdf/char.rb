@@ -53,7 +53,7 @@ module Bdf
           line = line.rjust(width + x_offset, '0')
         end
 
-        line[0, bounding_box[0]]
+        line.ljust(bounding_box[0], '0')[0, bounding_box[0]]
       end
 
       if y_offset > 0

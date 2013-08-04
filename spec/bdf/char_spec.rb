@@ -158,6 +158,21 @@ EOM
 00000
 EOM
         end
+
+        it do
+          font.to_s([6, 10, 0, -2]).should eql(<<EOM.chomp)
+000000
+000000
+000000
+100010
+011100
+010100
+011100
+100010
+000000
+000000
+EOM
+        end
       end
     end
   end
