@@ -8,7 +8,7 @@ $logger = Logger.new($stderr)
 $db = LevelDB::DB.new 'similarities.db'
 
 def main
-  font = Bdf::Font.parse(open('/tmp/efont-unicode-bdf-0.4.2/f24_b.bdf'))
+  font = Bdf::Font.parse(open('/tmp/efont-unicode-bdf-0.4.2/b24_b.bdf'))
   chars = font.chars.map do |char|
     bitset = Bitset.from_s(char.to_s(font.bounding_box).gsub(/\n/, ''))
     {
@@ -27,11 +27,11 @@ def main
       x << [b[:c], similarity(a, b)] if a != b
     end
 
-    $db.put(a[:c],
-      x.sort_by do |i, similarity|
-        similarity
-      end.reverse[0, 20].to_json
-    )
+    similarities = x.sort_by do |i, similarity|
+      similarity
+    end.reverse[0, 20]
+
+    $db.put(a[:c], similarities.to_json)
   end
 end
 
